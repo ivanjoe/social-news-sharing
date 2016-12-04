@@ -29,7 +29,10 @@ class App extends Component {
     const title = ReactDOM.findDOMNode(this.refs.titleInput).value.trim();
     console.log(title);
 
-    Meteor.call('tasks.insert', title, text);
+    Meteor.call('tasks.insert', title, text, (err) => {
+        console.log(err);
+      }
+    );
 
     // Clear form
     ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -91,6 +94,7 @@ class App extends Component {
                 <div className="form-group">
                   <input
                     type="text"
+                    id="titleInput"
                     ref="titleInput"
                     placeholder="Title"
                     className="form-control"
@@ -99,6 +103,7 @@ class App extends Component {
                 <div className="form-group">
                   <textarea
                     type="text"
+                    id="textInput"
                     ref="textInput"
                     placeholder="Type to add new news"
                     className="form-control"

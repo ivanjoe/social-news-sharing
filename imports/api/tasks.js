@@ -1,13 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Match } from 'meteor/check';
 
 export const Tasks = new Mongo.Collection('tasks');
 
 Meteor.methods({
   'tasks.insert'(title, text) {
-    check(title, String);
-    check(text, String);
+    NonEmptyString = Match.Where(function (x) {
+      check(x, String);
+      return x.length > 0;
+    });
+    check(title, NonEmptyString);
+    check(text, NonEmptyString);
 
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
