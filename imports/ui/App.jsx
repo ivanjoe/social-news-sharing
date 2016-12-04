@@ -17,6 +17,7 @@ class App extends Component {
 
     this.state = {
       hideCompleted: false,
+      timeSelect: 10,
     };
   }
 
@@ -41,11 +42,18 @@ class App extends Component {
     });
   }
 
+  updateTime() {
+    this.setState({
+      timeSelect: ReactDOM.findDOMNode(this.refs.timeSelect).value.trim(),
+    });
+  }
+
   renderTasks() {
     let filteredTasks = this.props.tasks;
-    if (this.state.hideCompleted) {
-      filteredTasks = filteredTasks.filter(task => !task.checked);
-    }
+    let ago = Date.now() - this.state.timeSelect * 1000;
+    console.log(ago);
+
+    filteredTasks = filteredTasks.filter(task => (task.createdAt > ago));
     return filteredTasks.map((task) => (
       <Task key={task._id} task={task} />
     ));
@@ -58,29 +66,25 @@ class App extends Component {
           <header>
             <h1>News in Havana ({this.props.incompleteCount})</h1>
 
-            <div className="form-check">
-              <label className="form-check-label">
-                <input
-                  type="checkbox"
-                  readOnly
-                  checked={this.state.hideCompleted}
-                  onClick={this.toggleHideCompleted.bind(this)}
-                  className="form-check-input"
-                />
-                &nbsp;Hide old news
-              </label>
+            <div className="row form-group">
+              <div className="col-sm-4">
+                <label htmlFor="timeSelect">Filter by time</label>
+                <select
+                  className="form-control"
+                  id="timeSelect"
+                  ref="timeSelect"
+                  onChange={this.updateTime.bind(this)}
+                >
+                  <option value="10">10 sec</option>
+                  <option value="300">5 min</option>
+                  <option value="259200">3 days</option>
+                  <option value="604800">7 days</option>
+                </select>
+              </div>
+              <div className="col-sm-8">
+                <AccountsUIWrapper />
+              </div>
             </div>
-            <div className="form-group">
-              <label for="exampleSelect2">Example multiple select</label>
-              <select className="form-control" id="exampleSelect2">
-                <option value="10">10 sec</option>
-                <option value="300">5 min</option>
-                <option value="259200">3 days</option>
-                <option value="604800">7 days</option>
-              </select>
-            </div>
-
-            <AccountsUIWrapper />
 
            { this.props.currentUser ?
               <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >

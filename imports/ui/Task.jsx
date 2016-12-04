@@ -25,15 +25,6 @@ export default class Task extends Component {
           &times;
         </button>
 
-        <input
-          type="checkbox"
-          readOnly
-          checked={this.props.task.checked}
-          onClick={this.toggleChecked.bind(this)}
-          className="news-checkbox"
-        />
-
-
         <h4>{this.props.task.title}</h4>
 
         <span className="text">
