@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import 'tether';
-import {Grid, Row, Col, Panel} from 'bootstrap';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -75,59 +73,62 @@ class App extends Component {
     return (
       <div className="container">
         <div className="row">
-          <header>
-            <h1>News in Havana ({this.props.incompleteCount})</h1>
+          <div className="col s12">
+            <header>
+              <h1>News in Havana ({this.props.incompleteCount})</h1>
 
-            <div className="row form-group">
-              <div className="col-sm-4">
-                <label htmlFor="timeSelect">Filter by time</label>
-                <select
-                  className="form-control"
-                  id="timeSelect"
-                  ref="timeSelect"
-                  onChange={this.updateTime.bind(this)}
-                >
-                  <option value="10">10 sec</option>
-                  <option value="300">5 min</option>
-                  <option value="259200">3 days</option>
-                  <option value="604800">7 days</option>
-                </select>
+              <div className="row">
+                <div className="col s4">
+                  <label htmlFor="timeSelect">Filter by time</label>
+                  <select
+                    className="browser-default"
+                    id="timeSelect"
+                    ref="timeSelect"
+                    onChange={this.updateTime.bind(this)}
+                  >
+                    <option value="10">10 sec</option>
+                    <option value="300">5 min</option>
+                    <option value="259200">3 days</option>
+                    <option value="604800">7 days</option>
+                  </select>
+                </div>
+                <div className="col s8">
+                  <AccountsUIWrapper />
+                </div>
               </div>
-              <div className="col-sm-8">
-                <AccountsUIWrapper />
-              </div>
-            </div>
 
-           { this.props.currentUser ?
-              <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
-                <div className="form-group" ref="divTitleInput">
+             { this.props.currentUser ?
+              <div className="row">
+                <form className="col s12" onSubmit={this.handleSubmit.bind(this)} >
+                  <div className="input-field" ref="divTitleInput">
+                    <input
+                      type="text"
+                      id="titleInput"
+                      ref="titleInput"
+                      placeholder="Title"
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="input-field" ref="divTextInput">
+                    <textarea
+                      type="text"
+                      id="textInput"
+                      ref="textInput"
+                      placeholder="Type to add new news"
+                      className="materialize-textarea"
+                      rows="3"
+                    />
+                  </div>
                   <input
-                    type="text"
-                    id="titleInput"
-                    ref="titleInput"
-                    placeholder="Title"
-                    className="form-control"
+                    type="submit"
+                    ref="submitButton"
+                    placeholder="Submit"
+                    className="btn btn-primary"
                   />
-                </div>
-                <div className="form-group" ref="divTextInput">
-                  <textarea
-                    type="text"
-                    id="textInput"
-                    ref="textInput"
-                    placeholder="Type to add new news"
-                    className="form-control"
-                    rows="3"
-                  />
-                </div>
-                <input
-                  type="submit"
-                  ref="submitButton"
-                  placeholder="Submit"
-                  className="btn btn-primary"
-                />
-              </form> : ''
-            }
-          </header>
+                </form></div>: ''
+              }
+            </header>
+          </div>
         </div>
 
         <div className="row news-container">

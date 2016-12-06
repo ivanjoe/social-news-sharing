@@ -16,7 +16,7 @@ export default class Task extends Component {
   render() {
     // Give tasks a different className when they are checked off,
     // so that we can style them nicely in CSS
-    const taskClassName = this.props.task.checked ? 'checked col-lg-4 news' : 'col-lg-4 news';
+    const taskClassName = this.props.task.checked ? 'checked col l4 news' : 'col l4 news';
     var timeAgo = moment(this.props.task.createdAt).fromNow()
 
     return (
@@ -25,16 +25,16 @@ export default class Task extends Component {
           &times;
         </button>
 
-        <h4>{this.props.task.title}</h4>
+        <h4 className="flow-text">{this.props.task.title}</h4>
 
         <span className="text">
           {this.props.task.text}
           <div className="row">
-            <div className="col-xs-6">
-              <p className="blockquote-footer">{this.props.task.username}</p>
+            <div className="col s6">
+              <p className="writer">{this.props.task.username}</p>
             </div>
-            <div className="col-xs-6">
-              <p className="text-xs-right small"><em>{timeAgo}</em></p>
+            <div className="col s6">
+              <p className="ago"><em>{timeAgo}</em></p>
             </div>
           </div>
         </span>

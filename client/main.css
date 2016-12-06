@@ -36,10 +36,6 @@ div.news {
   background: #fff;
 }
 
-div.news .text {
-  margin-left: 10px;
-}
-
 div.checked {
   color: #888;
 }
@@ -55,6 +51,16 @@ div.private {
 
 .toggle-private {
   margin-left: 5px;
+}
+
+.writer {
+  font-size: 80%;
+  font-variant: small-caps;
+}
+
+.ago {
+  font-size: 80%;
+  color: #ddd;
 }
 
 @media (max-width: 600px) {
