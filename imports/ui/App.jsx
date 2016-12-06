@@ -25,18 +25,28 @@ class App extends Component {
     event.preventDefault();
 
     // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-    const title = ReactDOM.findDOMNode(this.refs.titleInput).value.trim();
-    console.log(title);
+    const textDOM = ReactDOM.findDOMNode(this.refs.textInput);
+    const titleDOM = ReactDOM.findDOMNode(this.refs.titleInput);
+    const text = textDOM.value.trim();
+    const title = titleDOM.value.trim();
+
+    var div1 = ReactDOM.findDOMNode(this.refs.divTextInput);
+    var div2 = ReactDOM.findDOMNode(this.refs.divTitleInput);
+
 
     Meteor.call('tasks.insert', title, text, (err) => {
-        console.log(err);
+        div1.className += " has-danger";
+        div2.className += " has-danger";
+        if(err === undefined) {
+          div1.className = "form-group";
+          div2.className = "form-group";
+        }
       }
     );
 
     // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
-    ReactDOM.findDOMNode(this.refs.titleInput).value = '';
+    textDOM.value = '';
+    titleDOM.value = '';
   }
 
   toggleHideCompleted() {
@@ -54,7 +64,6 @@ class App extends Component {
   renderTasks() {
     let filteredTasks = this.props.tasks;
     let ago = Date.now() - this.state.timeSelect * 1000;
-    console.log(ago);
 
     filteredTasks = filteredTasks.filter(task => (task.createdAt > ago));
     return filteredTasks.map((task) => (
@@ -91,7 +100,7 @@ class App extends Component {
 
            { this.props.currentUser ?
               <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
-                <div className="form-group">
+                <div className="form-group" ref="divTitleInput">
                   <input
                     type="text"
                     id="titleInput"
@@ -100,7 +109,7 @@ class App extends Component {
                     className="form-control"
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group" ref="divTextInput">
                   <textarea
                     type="text"
                     id="textInput"
